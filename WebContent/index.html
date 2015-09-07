@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>WORD EXTRACTION!</title>
+</head>
+<body>
+
+<form method="post" action="api/v1/lemmatize" enctype="multipart/form-data">   
+     <h3>Choose your document for keywords/keyphrases extraction:</h3>
+     <input type="file" name="file" accept="media_type/*" required="required"><br><br>
+     <h3>Choose method:</h3>
+     <input type="radio" name="method" value="keywords" checked>Extract keywords
+     <br>
+     <input type="radio" name="method" value="keyphrases">Extract keyphrases
+     <br>
+     <h3>Number of top keywords/keyphrases (empty for all):</h3>
+     <input type="text" name="number" value="">
+     <br>
+     <br>
+     <input type="submit" id="btn1" value="EXTRACT"/>
+</form>
+</body>
+</html>
