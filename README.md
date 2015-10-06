@@ -6,6 +6,7 @@ At the moment this project evolved to Java Web Service that provides users abili
 
 # WORK
 My work on this project helped me to grow as Java programmer. I learned a lot about data structures and overcame some of the problems along the way regarding mostly extraction of keyphrases. 
+
 Keywords extraction is based on the fixed steps:
 - provided text needs to be chunked into words, 
 - words are turned into their basic form (lemmatization),
