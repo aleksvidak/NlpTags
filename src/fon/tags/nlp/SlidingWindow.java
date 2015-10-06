@@ -76,14 +76,6 @@ public class SlidingWindow {
 
 			}
 
-//		Iterator<String> iterator = pairOfPhrases.keySet().iterator();
-//
-//		while (iterator.hasNext()) {
-//			String key = iterator.next();
-//			String value = pairOfPhrases.get(key).toString();
-//
-//			System.out.println(key + " " + value);
-//		}
 		return (HashMap<String, Integer>) pairOfPhrases;
 
 	}

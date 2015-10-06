@@ -20,14 +20,14 @@ import edu.stanford.nlp.pipeline.Annotation;
 import edu.stanford.nlp.pipeline.StanfordCoreNLP;
 import edu.stanford.nlp.tagger.maxent.MaxentTagger;
 import edu.stanford.nlp.util.CoreMap;
-import fon.tags.graph.LemmasGraph;
+import fon.tags.graph.WordsGraph;
 import fon.tags.graph.Transformer;
 import fon.tags.input.CustomStopwords;
 
-public class Lemmatizer {
+public class KeywordsParser {
 	protected StanfordCoreNLP pipeline;
 
-	public Lemmatizer() {
+	public KeywordsParser() {
 		// Create StanfordCoreNLP object properties, with POS tagging
 		// (required for lemmatization), and lemmatization
 		Properties props;
@@ -40,8 +40,8 @@ public class Lemmatizer {
 		this.pipeline = new StanfordCoreNLP(props);
 	}
 
-	// Destructure text into lemmas, returns lemmas list
-	public TreeMap<String, Integer> lemmatize(String documentText, int noOfEntries) {
+	// Destructure text into lemmas, returns lemmas list without top and bottom 5% words
+	public TreeMap<String, Integer> toKeywords(String documentText, int noOfEntries) {
 		
 		List<String> lemmas = new LinkedList<String>();
 
@@ -93,7 +93,7 @@ public class Lemmatizer {
 			}
 		}
 
-		tags = LemmasGraph.CreateGraph(lemmas);
+		tags = WordsGraph.CreateGraph(lemmas);
 
 		if (noOfEntries==0) 
 			return Transformer.SortByValue(tags);		
@@ -102,7 +102,7 @@ public class Lemmatizer {
 	}
 
 	// lemmatize given text and return lemmas without stopwords
-	public TreeMap<String, Integer> lemmatizeNoStopWords(String documentText, int noOfEntries) {
+	public TreeMap<String, Integer> toKeywordsNoStop(String documentText, int noOfEntries) {
 		
 		List<String> lemmasNoStopWords = new LinkedList<String>();
 
@@ -131,7 +131,8 @@ public class Lemmatizer {
 				String word = token.get(LemmaAnnotation.class).toLowerCase();
 				tag = tagger.tagString(word);
 				tgw.setFromString(tag, "_");
-
+				
+				//if tagged word is not noun, or it is less than 3 characters long or it is in the list of frequent english words do nothing
 				if (!tgw.tag().matches("NN |NNS |NNP |NNPS ")
 						|| word.length() < 3 || word.matches("-lrb-|-rrb-|-lsb-|-rsb-") || stopWords.contains(word)
 						|| csw.is(word)) {
@@ -145,15 +146,15 @@ public class Lemmatizer {
 		}
 		// System.out.println(lemmasNoStopWords);
 
-		HashMap<String, Integer> tags = new HashMap<String, Integer>();
-
-
-		tags = LemmasGraph.CreateGraph(lemmasNoStopWords);
+		HashMap<String, Integer> keywords = new HashMap<String, Integer>();
+		
+		//return keywords
+		keywords = WordsGraph.CreateGraph(lemmasNoStopWords);
 
 		if (noOfEntries==0)
-			return Transformer.SortByValue(tags);
+			return Transformer.SortByValue(keywords);
 		else	
-			return Transformer.returnFirstEntries(noOfEntries, Transformer.SortByValue(tags));
+			return Transformer.returnFirstEntries(noOfEntries, Transformer.SortByValue(keywords));
 	}
 
 }

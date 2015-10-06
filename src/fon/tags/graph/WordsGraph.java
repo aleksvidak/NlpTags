@@ -9,7 +9,7 @@ import edu.uci.ics.jung.algorithms.scoring.DegreeScorer;
 import edu.uci.ics.jung.graph.Graph;
 import edu.uci.ics.jung.graph.UndirectedSparseMultigraph;
 
-public class LemmasGraph {
+public class WordsGraph {
 
 	// Lemmas become nodes connected with weighted edges (number of immediate bigrams in text)
 
@@ -17,9 +17,9 @@ public class LemmasGraph {
 		Graph<MyNode, MyLink> lemmasGraph = new UndirectedSparseMultigraph<MyNode, MyLink>();
 
 		String previous = "";
+		//create graph
 		for (String current : dictionary) {
 			int c = 1;
-
 
 			MyNode currentNode = new MyNode(current);
 			MyNode previousNode = new MyNode(previous);
@@ -48,22 +48,19 @@ public class LemmasGraph {
 			previous = current; // avoids a ConcurrentModificationException
 		}
 
-		/*Collection<MyLink> links = new LinkedList<MyLink>();
-		links = lemmasGraph.getEdges();
-		for (MyLink link : links) {
-			System.out.println(link.weight+" " + link.edgeName);
-		}*/
+
 		Collection<MyNode> nodes = new LinkedList<MyNode>();
 		nodes = lemmasGraph.getVertices();
 		DegreeScorer<MyNode> graphscorer = new DegreeScorer<MyNode>(lemmasGraph);
 		int score = 0;
-		HashMap<String, Integer> lemmasScore = new HashMap<String, Integer>();
+		HashMap<String, Integer> wordsScore = new HashMap<String, Integer>();
 		for (MyNode node : nodes) {
 		
 		score = graphscorer.getVertexScore(node);
-		lemmasScore.put(node.word, score);
+		wordsScore.put(node.word, score);
 		
 		}
-		return lemmasScore;
+		//return scored keywords
+		return wordsScore;
 	}
 }

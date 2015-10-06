@@ -9,8 +9,7 @@ public class NounPhrases {
 
 	public static List<String> GetNounPhrases(Tree parse)
 	{
-
-		//List<Tree> phraseList=new ArrayList<Tree>();
+		//look in the tree for noun phrases based on the annotations NP
 		List<String> phraseList=new ArrayList<String>();
 
 		String phrase = "";
@@ -37,11 +36,6 @@ public class NounPhrases {
 						phraseList.add(phrase.toLowerCase());
 					}
 				}
-
-
-
-
-
 
 				//phraseList.add(subtree);	        
 			}

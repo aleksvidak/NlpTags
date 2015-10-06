@@ -1,16 +1,14 @@
 package fon.tags.graph;
 
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.SortedMap;
 import java.util.TreeMap;
 
 import fon.tags.nlp.ValueComparator;
 
 public class Transformer {
-	//make dictionary from lemmas list
+	//make unique lemmas dictionary
 		public static HashMap<String, Integer> makeDictionary(List<String> lemmas) {
 			
 			HashMap<String, Integer> dictionary = new HashMap<String, Integer>();
@@ -38,6 +36,7 @@ public class Transformer {
 			return sortedMap;
 		}
 		
+		//return given number of keywords/keyphrases
 		public static TreeMap<String,Integer> returnFirstEntries(int max, TreeMap<String,Integer> source) {
 			  int count = 0;
 			  TreeMap<String,Integer> target = new TreeMap<String,Integer>();
