@@ -71,9 +71,11 @@ To remove words by their frequency in the given text it is important to make a d
 ##### Most common english words (stopwords)
 To remove most common english words there are two stopword lists used in this project:
 - http://programcreek.com/java-api-examples/index.php?example_code_path=weka-weka.core-Stopwords.java
-- A list found in [StopAnylizer](https://lucene.apache.org/core/4_0_0/analyzers-common/org/apache/lucene/analysis/core/StopAnalyzer.html) class of Apache Lucene Core text search engine library.
+- A list found in [StopAnalyzer](https://lucene.apache.org/core/4_0_0/analyzers-common/org/apache/lucene/analysis/core/StopAnalyzer.html) class of Apache Lucene Core text search engine library.
 
-
+The result of previous transformations is a list of lemmas ready for insertion into graph. To be able to create graph, its' nodes and edges, service uses [JUNG](http://jung.sourceforge.net/) library.
+Iterating through list of lemmas, they are added to the graph as nodes if the node doesn't exist already and every immediate bigram is presented in graph by edge between two lemmas, so every reoccurence of the same bigram increments the weight of the edge by one.
+After graph creation 
 ## References
 - http://arxiv.org/abs/1401.6571
 - http://nlp.stanford.edu/software/corenlp.shtml#Usage
