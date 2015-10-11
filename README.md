@@ -5,8 +5,6 @@ It is still work in progress and it is not something that can be useful to publi
 At the moment this project evolved to Java Web Service that provides users ability to choose a text they want, upload it and call web service to extract keywords or keyphrases from it with the number of keywords/keyphrases the one wants.
 
 # WORK
-My work on this project helped me to grow as Java programmer. I learned a lot about data structures and overcame some of the problems along the way regarding mostly extraction of keyphrases. 
-
 Keywords extraction is based on the fixed steps:
 - provided text needs to be chunked into words, 
 - words are turned into their basic form (lemmatization),
