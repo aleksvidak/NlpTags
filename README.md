@@ -76,7 +76,7 @@ To remove most common english words there are two stopword lists used in this pr
 
 The result of previous transformations is a list of lemmas ready for insertion into graph. To be able to create graph, its' nodes and edges, service uses [JUNG](http://jung.sourceforge.net/) library.
 Iterating through list of lemmas, lemmas are added to the graph as nodes if the node doesn't exist already and every immediate bigram is presented in graph by edge between two lemmas, so every reoccurence of the same bigram increments the weight of the edge by one.
-After graph creation nodes are scored using [DegreeScorer](http://jung.sourceforge.net/doc/api/edu/uci/ics/jung/algorithms/scoring/DegreeScorer.html) class from JUNG library. 
+After graph creation nodes are scored using [DegreeScorer](http://jung.sourceforge.net/doc/api/edu/uci/ics/jung/algorithms/scoring/DegreeScorer.html) class from JUNG library which is based on degree centrality measure.
 
 Keywords are returned to user based on the inquiry. It is possible to choose text for extraction, choose between extraction methods and number of keywords service should return (zero for all keywords).
 
@@ -87,3 +87,9 @@ Example of service call:
 POST /api/v1/tag
 ```
 with parameters: file, method and number.
+
+#### Keyphrases
+
+### Acknowledgements
+
+### Licence
