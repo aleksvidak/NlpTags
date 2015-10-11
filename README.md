@@ -17,6 +17,8 @@ This project has been built with the attempt to take a piece of text and convert
 can be manipulated in different ways.
 
 ## WORK
+The idea to work on this kind of project was influenced from the	Lahiri, S., Choudhury, S. R., & Caragea, C. (2014). *Keyword and Keyphrase Extraction Using Centrality Measures on Collocation Networks*. CoRR. Retrieved November 22, 2014, from http://arxiv.org/pdf/1401.6571v1
+
 
 
 Keywords extraction is based on the fixed steps:
