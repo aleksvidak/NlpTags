@@ -93,3 +93,4 @@ with parameters: file, method and number.
 ### Acknowledgements
 
 ### Licence
+See the [LICENSE](LICENSE.md) file for license rights and limitations (Apache License).
