@@ -61,7 +61,10 @@ Tokenizing text results are "words" which include dots, commas, regular words ..
 
 To be able to identify nouns there is MaxentTagger - a Part-Of-Speech Tagger (POS Tagger) which is a piece of software that reads text in some language and assigns parts of speech to each word, such as noun, verb, adjective, etc. There are two taggers in distribution and service uses a model using only left second-order sequence information and similar but less unknown words and lexical features as the other model in *edu/stanford/nlp/models/pos-tagger/english-left3words/english-left3words-distsim.tagger*. This tagger runs a lot faster, and is recommended for general use. Its accuracy was 96.92% on Penn Treebank WSJ secs. 22-24.
 
-It assigns lemmas with one of the tags on the following list https://www.ling.upenn.edu/courses/Fall_2003/ling001/penn_treebank_pos.html. Interesting tags are NN, NNS, NNP and NNPS. All other lemmas are ignored. 
+It assigns lemmas with one of the tags on the following [list](https://www.ling.upenn.edu/courses/Fall_2003/ling001/penn_treebank_pos.html). Needed noun tags are NN, NNS, NNP and NNPS. All other lemmas are ignored. 
+
+This is the point in extraction of keywords where methods for eliminating _top 5% and bottom 5% words ordered by frequency in the given text_ and _most common english words (stopwords)_ separate ways.
+
 
 
 ## References
