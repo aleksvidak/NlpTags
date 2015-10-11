@@ -9,7 +9,10 @@ It is still work in progress and it is not something that can be useful to publi
 
 ### Why?
 Increasingly, companies, governments and individuals are faced with large amounts of text that are critical for working and living. Decisions need to be made fast, so it is crucial to get important parts of text in order to act accordingly. 
-At the same time, a plethora of content recommendation systems are built and massive amount of Internet moguls tend to use them to get advantage of user feedback. 
+
+At the same time, a plethora of content recommendation systems are built and massive amount of Internet moguls tend to use 
+them to get advantage of user feedback. 
+
 This project has been built with the attempt to take a piece of text and convert it to programmer friendy data structure that
 can be manipulated in different ways.
 
