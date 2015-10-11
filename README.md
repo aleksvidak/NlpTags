@@ -1,12 +1,10 @@
 # NlpTags
-======
 Code in this project is a result of research on natural language processing. It is based on Stanford CoreNLP framework and other helpful projects found on the internet regarding this subject.
 It is still work in progress and it is not something that can be useful to public yet.
 
 At the moment this project evolved to Java Web Service that provides users ability to choose a text they want, upload it and call web service to extract keywords or keyphrases from it with the number of keywords/keyphrases the one wants.
 
 # WORK
-======
 Keywords extraction is based on the fixed steps:
 ------
 - provided text needs to be chunked into words, 
@@ -23,7 +21,6 @@ Keyphrases extraction is based on:
 - phrases are presented in the form of graph and are scored based on the degree centrality measure
 
 # References
-======
 - http://arxiv.org/abs/1401.6571
 - http://nlp.stanford.edu/software/corenlp.shtml#Usage
 - http://nlp.stanford.edu/software/lex-parser.shtml
