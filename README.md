@@ -91,6 +91,6 @@ with parameters: file, method and number.
 #### Keyphrases
 
 ### Acknowledgements
-
-### Licence
+This project has been developed as a part of the assignment for the subject *Applications of artificial intelligence* at the Faculty of Organization Sciences, University of Belgrade, Serbia.
+### License
 See the [LICENSE](LICENSE.md) file for license rights and limitations (Apache License).
