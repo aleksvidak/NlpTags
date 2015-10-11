@@ -23,8 +23,7 @@ The approach in mentioned paper is based on several fixed steps on the way of re
 
 There are two parts of the project, one concerning extraction of keywords and other concerning extraction of keyphrases.
 
-To extract keywords from text following steps are required:
-------
+#### To extract keywords from text following steps are required:
 1. Division of provided text into sentences and subsequently sentences into words,
 2. Conversion of words into their basic form ([lemmatisation](https://en.wikipedia.org/wiki/Lemmatisation)),
 3. Elimination of lemmas that would affect negativelly the final outcome, but empirically don't have value:
@@ -34,8 +33,7 @@ To extract keywords from text following steps are required:
 5. Scoring the graph based on one of the given centrality measures,
 6. Returning the scored lemmas in JSON format.
 
-To extract keywords from text following steps are required:
-------
+#### To extract keywords from text following steps are required:
 1. 
 
 Keyphrases extraction is based on:
