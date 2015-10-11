@@ -63,8 +63,15 @@ To be able to identify nouns there is MaxentTagger - a Part-Of-Speech Tagger (PO
 
 It assigns lemmas with one of the tags on the following [list](https://www.ling.upenn.edu/courses/Fall_2003/ling001/penn_treebank_pos.html). Needed noun tags are NN, NNS, NNP and NNPS. All other lemmas are ignored. 
 
-This is the point in extraction of keywords where methods for eliminating _top 5% and bottom 5% words ordered by frequency in the given text_ and _most common english words (stopwords)_ separate ways.
+This is the point in extraction of keywords where methods for eliminating __top 5% and bottom 5% words ordered by frequency in the given text_ and _most common english words (stopwords)__ separate ways.
 
+##### Top 5% and bottom 5% words ordered by frequency in the given text
+To remove words by their frequency in the given text it is important to make a dictionary where value is number of occurences of the specific word in text. After sorting that data structure it is possible to remove Top 5% and bottom 5% words by frequency.
+
+##### Most common english words (stopwords)
+To remove most common english words there are two stopword lists used in this project:
+- http://programcreek.com/java-api-examples/index.php?example_code_path=weka-weka.core-Stopwords.java
+- A list found in [StopAnylizer](https://lucene.apache.org/core/4_0_0/analyzers-common/org/apache/lucene/analysis/core/StopAnalyzer.html) class of Apache Lucene Core text search engine library.
 
 
 ## References
