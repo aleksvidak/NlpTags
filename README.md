@@ -29,7 +29,7 @@ There are two parts of the project, one concerning extraction of keywords and ot
 3. Elimination of lemmas that would affect negativelly the final outcome, but empirically don't have value as keywords:
   * Top 5% and bottom 5% words ordered by frequency in the given text or
   * Most common english words (stopwords),
-4. Creation of graph where lemmas represent nodes and numbers of immediate bigrams in text represent graph edges,
+4. Creation of graph where lemmas represent nodes and number of immediate bigrams in text represents graph edge between two bigram lemmas,
 5. Scoring the graph based on one of the given centrality measures,
 6. Returning the scored lemmas in JSON format.
 
@@ -38,7 +38,7 @@ There are two parts of the project, one concerning extraction of keywords and ot
 2. Conversion of words into their basic form (lemmatisation),
 3. Working out the grammatical structure of sentences by annotating lemmas,
 4. Elimination of grammatical structures that don't represent noun phrases,
-5. Creation of graph where noun phrases represent nodes and number of occurences of two noun phrases in certain window in text represent graph edge between two nodes.
+5. Creation of graph where noun phrases represent nodes and number of occurences of two noun phrases in certain window in text represents graph edge between two nodes.
 6. Scoring the graph based on one of the given centrality measures,
 7. Returning the scored noun phrases in JSON format.
 
