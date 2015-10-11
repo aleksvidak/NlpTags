@@ -1,13 +1,21 @@
-# Keyword and Keyphrase Extraction
-## About the Project
+# NLP Tags
+A keywords & keyphrases extraction Java RESTful Web Service for Java web applications.
+## Overview
 Code in this project is a result of research on natural language processing (NLP). Core functionalities are based on Stanford CoreNLP framework (http://nlp.stanford.edu/software/corenlp.shtml) and JUNG (http://jung.sourceforge.net/).
 
-Main goal during development was to create a functional Java Web Service to provide users the possibility to extract keywords and keyphrases from the given text.
+Main goal during project development was to create a functional Java Web Service to provide users the possibility to extract keywords and keyphrases from the given text and return result in JSON format.
 
 It is still work in progress and it is not something that can be useful to public yet.
 
+### Why?
+Increasingly, companies, governments and individuals are faced with large amounts of text that are critical for working and living. Decisions need to be made fast, so it is crucial to get important parts of text in order to act accordingly. 
+At the same time, a plethora of content recommendation systems are built and massive amount of Internet moguls tend to use them to get advantage of user feedback. 
+This project has been built with the attempt to take a piece of text and convert it to programmer friendy data structure that
+can be manipulated in different ways.
 
 ## WORK
+
+
 Keywords extraction is based on the fixed steps:
 ------
 - provided text needs to be chunked into words, 
