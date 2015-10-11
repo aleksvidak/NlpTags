@@ -20,11 +20,12 @@ import edu.stanford.nlp.pipeline.StanfordCoreNLP;
 import edu.stanford.nlp.tagger.maxent.MaxentTagger;
 import edu.stanford.nlp.util.CoreMap;
 import fon.tags.graph.Transformer;
-import fon.tags.graph.WordsGraph;
+import fon.tags.graph.KeywordsGraph;
 import fon.tags.input.CustomStopwords;
 
 public class KeywordsParser {
 	protected StanfordCoreNLP pipeline;
+	protected MaxentTagger tagger;
 
 	public KeywordsParser() {
 		// Create StanfordCoreNLP object properties, with POS tagging
@@ -36,6 +37,9 @@ public class KeywordsParser {
 				"fon.tags.nlp.StopwordAnnotator");
 		// StanfordCoreNLP loads a lot of models, so you probably
 		// only want to do this once per execution
+		this.tagger = new MaxentTagger(
+				"edu/stanford/nlp/models/pos-tagger/english-left3words/english-left3words-distsim.tagger");
+
 		this.pipeline = new StanfordCoreNLP(props);
 	}
 
@@ -52,32 +56,46 @@ public class KeywordsParser {
 		// run all Annotators on this text
 		this.pipeline.annotate(document);
 
-		// Iterate over all of the sentences found
+		// get all senteces in a text
 		List<CoreMap> sentences = document.get(SentencesAnnotation.class);
 
+		String tag = "";
+		String lemma = "";
+		TaggedWord tgw = new TaggedWord();
+		// Iterate over all of the sentences found
 		for (CoreMap sentence : sentences) {
 			// Iterate over all tokens in a sentence
 			for (CoreLabel token : sentence.get(TokensAnnotation.class)) {
 				// Retrieve and add the lemma for each word into the list of
 				// lemmas
-				lemmas.add(token.get(LemmaAnnotation.class).toLowerCase());
+				lemma = token.get(LemmaAnnotation.class).toLowerCase();
+				tag = tagger.tagString(lemma);
+				tgw.setFromString(tag, "_");
+
+				if (!tgw.tag().matches("NN |NNS |NNP |NNPS ")
+						|| lemma.length() < 3
+						|| lemma.matches("-lrb-|-rrb-|-lsb-|-rsb-")) {
+					// do nothing
+				} else
+					lemmas.add(lemma);
 			}
 		}
 
-		TreeMap<String, Integer> tags = new TreeMap<String, Integer>();
-		TreeMap<String, Integer> sortedTags = new TreeMap<String, Integer>();
+		TreeMap<String, Integer> keywords = new TreeMap<String, Integer>();
+		TreeMap<String, Integer> sortedKeywords = new TreeMap<String, Integer>();
 
 		// remove top 5% and bottom 5% words by frequency
-		tags = Transformer.makeDictionary(lemmas);
-		sortedTags = Transformer.sortByValue(tags);
+		keywords = Transformer.makeDictionary(lemmas);
+		sortedKeywords = Transformer.sortByValue(keywords);
 
-		int perc = 5 * sortedTags.size() / 100;
+		int fivePercent = 5 * sortedKeywords.size() / 100;
 
-		for (int i = 0; i < perc; i++) {
-			@SuppressWarnings("rawtypes")
-			Iterator it = lemmas.iterator();
+		@SuppressWarnings("rawtypes")
+		Iterator it = lemmas.iterator();
 
-			Map.Entry<String, Integer> a = sortedTags.pollFirstEntry();
+		for (int i = 0; i < fivePercent; i++) {
+
+			Map.Entry<String, Integer> a = sortedKeywords.pollFirstEntry();
 			while (it.hasNext()) {
 				Object o = it.next();
 				if (a.getKey().equalsIgnoreCase((String) o)) {
@@ -85,7 +103,7 @@ public class KeywordsParser {
 				}
 			}
 
-			Map.Entry<String, Integer> b = sortedTags.pollLastEntry();
+			Map.Entry<String, Integer> b = sortedKeywords.pollLastEntry();
 			while (it.hasNext()) {
 				Object o = it.next();
 				if (b.getKey().equalsIgnoreCase((String) o)) {
@@ -94,32 +112,32 @@ public class KeywordsParser {
 			}
 		}
 
-		tags = WordsGraph.createGraph(lemmas);
+		keywords = KeywordsGraph.createGraph(lemmas);
 
 		if (noOfEntries == 0)
-			return Transformer.sortByValue(tags);
+			return Transformer.sortByValue(keywords);
 		else
 			return Transformer.returnFirstEntries(noOfEntries,
-					Transformer.sortByValue(tags));
+					Transformer.sortByValue(keywords));
 	}
 
 	// lemmatize given text and return lemmas without stopwords
 	public TreeMap<String, Integer> toKeywordsNoStop(String documentText,
 			int noOfEntries) {
 
-		List<String> lemmasNoStopWords = new LinkedList<String>();
+		List<String> lemmas = new LinkedList<String>();
 
 		// create an empty Annotation just with the given text
 		Annotation document = new Annotation(documentText);
 		// run all Annotators on this text
 		this.pipeline.annotate(document);
 		// instantiate nlp tagger to get out noun words only
-		MaxentTagger tagger = new MaxentTagger(
-				"edu/stanford/nlp/models/pos-tagger/english-left3words/english-left3words-distsim.tagger");
 
 		CustomStopwords csw = new CustomStopwords();
 
 		String tag = "";
+		String lemma = "";
+		TaggedWord tgw = new TaggedWord();
 
 		// Iterate over all of the sentences found
 		List<CoreMap> sentences = document.get(SentencesAnnotation.class);
@@ -129,23 +147,20 @@ public class KeywordsParser {
 			for (CoreLabel token : sentence.get(TokensAnnotation.class)) {
 				// Retrieve and add the lemma for each word into the list of
 				// lemmas
-				TaggedWord tgw = new TaggedWord();
 
-				String word = token.get(LemmaAnnotation.class).toLowerCase();
-				tag = tagger.tagString(word);
+				lemma = token.get(LemmaAnnotation.class).toLowerCase();
+				tag = tagger.tagString(lemma);
 				tgw.setFromString(tag, "_");
 
 				// if tagged word is not noun, or it is less than 3 characters
 				// long or it is in the list of frequent english words do
 				// nothing
 				if (!tgw.tag().matches("NN |NNS |NNP |NNPS ")
-						|| word.length() < 3
-						|| word.matches("-lrb-|-rrb-|-lsb-|-rsb-")
-						|| stopWords.contains(word) || csw.is(word)) {
-
+						|| lemma.length() < 3
+						|| lemma.matches("-lrb-|-rrb-|-lsb-|-rsb-")
+						|| stopWords.contains(lemma) || csw.is(lemma)) {
 				} else {
-					lemmasNoStopWords.add(token.get(LemmaAnnotation.class)
-							.toLowerCase());
+					lemmas.add(lemma);
 				}
 
 			}
@@ -154,13 +169,13 @@ public class KeywordsParser {
 		TreeMap<String, Integer> keywords = new TreeMap<String, Integer>();
 
 		// return keywords
-		keywords = WordsGraph.createGraph(lemmasNoStopWords);
+		keywords = KeywordsGraph.createGraph(lemmas);
 
-		if (noOfEntries == 0) 
+		if (noOfEntries == 0)
 			return Transformer.sortByValue(keywords);
 		else
-			return Transformer.sortByValue(Transformer.returnFirstEntries(noOfEntries,
-					keywords));
+			return Transformer.returnFirstEntries(noOfEntries,
+					Transformer.sortByValue(keywords));
 	}
 
 }

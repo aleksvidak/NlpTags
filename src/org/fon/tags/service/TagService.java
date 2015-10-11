@@ -31,11 +31,16 @@ public class TagService {
 		String text = TextInput.getStringFromInputStream(fileInputStream);
 
 		String json = "";
-		if (method.equalsIgnoreCase("keywords")) {
+		if (method.equalsIgnoreCase("stopwords")) {
 			KeywordsParser keywordsParser = new KeywordsParser();
 			Gson gson = new Gson();
 			json = gson.toJson(keywordsParser.toKeywordsNoStop(text, number));
-		} else if (method.equalsIgnoreCase("keyphrases")) {
+		} else if (method.equalsIgnoreCase("frequency")) {
+			KeywordsParser keywordsParser = new KeywordsParser();
+			Gson gson = new Gson();
+			json = gson.toJson(keywordsParser.toKeywords(text, number));
+		}
+		else if (method.equalsIgnoreCase("keyphrases")) {
 			KeyphrasesParser keyphrasesParser = new KeyphrasesParser();
 			Gson gson = new Gson();
 			json = gson.toJson(keyphrasesParser.toKeyphrases(text, number));

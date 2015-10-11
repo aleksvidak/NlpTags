@@ -9,7 +9,7 @@ import edu.uci.ics.jung.algorithms.scoring.DegreeScorer;
 import edu.uci.ics.jung.graph.Graph;
 import edu.uci.ics.jung.graph.UndirectedSparseMultigraph;
 
-public class PhrasesGraph {
+public class KeyphrasesGraph {
 
 	// create graph based on the given HashMap
 	public static TreeMap<String, Integer> createGraph(

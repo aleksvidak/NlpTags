@@ -38,14 +38,14 @@ public class Transformer {
 	public static TreeMap<String, Integer> returnFirstEntries(int max,
 			TreeMap<String, Integer> source) {
 		int count = 0;
-		TreeMap<String, Integer> target = new TreeMap<String, Integer>();
+		TreeMap<String, Integer> result = new TreeMap<String, Integer>();
 		for (Map.Entry<String, Integer> entry : source.entrySet()) {
 			if (count >= max)
 				break;
 
-			target.put(entry.getKey(), entry.getValue());
+			result.put(entry.getKey(), entry.getValue());
 			count++;
 		}
-		return target;
+		return sortByValue(result);
 	}
 }

@@ -9,17 +9,17 @@ import edu.uci.ics.jung.algorithms.scoring.DegreeScorer;
 import edu.uci.ics.jung.graph.Graph;
 import edu.uci.ics.jung.graph.UndirectedSparseMultigraph;
 
-public class WordsGraph {
+public class KeywordsGraph {
 
 	// Lemmas become nodes connected with weighted edges (number of immediate
 	// bigrams in text)
 
-	public static TreeMap<String, Integer> createGraph(List<String> dictionary) {
+	public static TreeMap<String, Integer> createGraph(List<String> lemmas) {
 		Graph<CustomNode, CustomLink> lemmasGraph = new UndirectedSparseMultigraph<CustomNode, CustomLink>();
 
 		String previous = "";
 		// create graph
-		for (String current : dictionary) {
+		for (String current : lemmas) {
 			int c = 1;
 
 			CustomNode currentNode = new CustomNode(current);

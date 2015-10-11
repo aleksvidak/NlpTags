@@ -17,7 +17,7 @@ import edu.stanford.nlp.pipeline.StanfordCoreNLP;
 import edu.stanford.nlp.trees.Tree;
 import edu.stanford.nlp.util.CoreMap;
 import fon.tags.graph.NounPhrases;
-import fon.tags.graph.PhrasesGraph;
+import fon.tags.graph.KeyphrasesGraph;
 import fon.tags.graph.Transformer;
 
 public class KeyphrasesParser {
@@ -117,7 +117,7 @@ public class KeyphrasesParser {
 
 		TreeMap<String, Integer> score;
 
-		score = PhrasesGraph.createGraph(SlidingWindow.CreateSlidingWindow(
+		score = KeyphrasesGraph.createGraph(SlidingWindow.CreateSlidingWindow(
 				median, allWords, nounPhrases));
 		// System.out.println(score);
 		// if user set 0 to the desired keyphrases result get all keyphrases,
