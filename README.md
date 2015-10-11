@@ -33,15 +33,25 @@ There are two parts of the project, one concerning extraction of keywords and ot
 5. Scoring the graph based on one of the given centrality measures,
 6. Returning the scored lemmas in JSON format.
 
-#### To extract keywords from text following steps are required:
-1. 
+#### To extract keyphrases from text following steps are required:
+1. Division of provided text into sentences and subsequently sentences into words,
+2. Conversion of words into their basic form (lemmatisation),
+3. Working out the grammatical structure of sentences by annotating lemmas,
+4. Elimination of grammatical structures that don't represent noun phrases,
+5. Creation of graph where noun phrases represent nodes and number of occurences of two noun phrases in certain window in text represent graph edge between two nodes.
+6. Scoring the graph based on one of the given centrality measures,
+7. Returning the scored noun phrases in JSON format.
 
-Keyphrases extraction is based on:
-------
-- chunking provided text into words, 
-- work out the grammatical structure of sentences with lex parser for getting noun phrases
-- using window (median sentence length in text) approach to elaborate how many times two noun phrases are together in a text
-- phrases are presented in the form of graph and are scored based on the degree centrality measure
+### Solution
+Based on the steps mentioned above, it was important to find appropriate libraries, one that deals with NLP tasks and other that is good for creating graphs and scoring edges based on the the different centrality measures.
+
+To proccess input text Java Service uses [The Stanford CoreNLP](http://nlp.stanford.edu/software/corenlp.shtml#Usage) library that provides a set of natural language analysis tools which can take raw text input and supply:
+- the base forms of words, 
+- their parts of speech, whether they are names of companies, people, etc., 
+- normalized dates, times, and numeric quantities, and 
+- marking up the structure of sentences in terms of phrases and word dependencies, 
+- indication which noun phrases refer to the same entities, 
+- indication of sentiment, etc. 
 
 ## References
 - http://arxiv.org/abs/1401.6571
