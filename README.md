@@ -1,7 +1,7 @@
 # NLP Tags
 A keywords & keyphrases extraction Java RESTful Web Service for Java web applications.
 ## Overview
-Code in this project is a result of research on natural language processing (NLP). Core functionalities are based on Stanford CoreNLP framework (http://nlp.stanford.edu/software/corenlp.shtml) and JUNG (http://jung.sourceforge.net/).
+Code in this project is a result of research on natural language processing (NLP). Core functionalities are based on Stanford CoreNLP framework (http://nlp.stanford.edu/) and JUNG (http://jung.sourceforge.net/).
 
 Main goal during project development was to create a functional Java Web Service to provide users the possibility to extract keywords and keyphrases from the given text and return result in JSON format.
 
@@ -45,13 +45,22 @@ There are two parts of the project, one concerning extraction of keywords and ot
 ### Solution
 Based on the steps mentioned above, it was important to find appropriate libraries, one that deals with NLP tasks and other that is good for creating graphs and scoring edges based on the the different centrality measures.
 
-To proccess input text Java Service uses [The Stanford CoreNLP](http://nlp.stanford.edu/software/corenlp.shtml#Usage) library that provides a set of natural language analysis tools which can take raw text input and supply:
+To deal with input text, Java Service uses [The Stanford CoreNLP](http://nlp.stanford.edu/software/corenlp.shtml#Usage) library that provides a set of natural language analysis tools which can take raw text input and supply:
 - the base forms of words, 
 - their parts of speech, whether they are names of companies, people, etc., 
 - normalized dates, times, and numeric quantities, and 
 - marking up the structure of sentences in terms of phrases and word dependencies, 
 - indication which noun phrases refer to the same entities, 
 - indication of sentiment, etc. 
+
+Process starts by chunking text to sentences and then a tokenizer divides text into a sequence of tokens, which roughly correspond to "words". 
+Tokenizing text results are "words" which include dots, commas, regular words ... Tokens can be transformed to lemmas (to the words' basic form) and not all lemmas are valuable as tags in the end, so it is important to remove those unwanted lemmas:
+- that are not nouns,
+- that are less than 3 characters long,
+- brackets that are presented in form of "-lrb-,-rrb-,-lsb-,-rsb-".
+To be able to identify nouns there is [MaxentTagger](http://www-nlp.stanford.edu/nlp/javadoc/javanlp/edu/stanford/nlp/tagger/maxent/MaxentTagger.html) - a Part-Of-Speech Tagger (POS Tagger) which is a piece of software that reads text in some language and assigns parts of speech to each word, such as noun, verb, adjective, etc. There are two taggers in distribution and service uses a model using only left second-order sequence information and similar but less unknown words and lexical features as the other model in edu/stanford/nlp/models/pos-tagger/english-left3words/english-left3words-distsim.tagger. This tagger runs a lot faster, and is recommended for general use. Its accuracy was 96.92% on Penn Treebank WSJ secs. 22-24.
+
+
 
 ## References
 - http://arxiv.org/abs/1401.6571
