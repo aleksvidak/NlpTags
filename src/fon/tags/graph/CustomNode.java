@@ -1,9 +1,9 @@
 package fon.tags.graph;
 
-public class MyNode {
+public class CustomNode {
 	String word; // good coding practice would have this as private
 
-	public MyNode(String word) {
+	public CustomNode(String word) {
 		this.word = word;
 	}
 
@@ -27,7 +27,7 @@ public class MyNode {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		MyNode other = (MyNode) obj;
+		CustomNode other = (CustomNode) obj;
 		if (word == null) {
 			if (other.word != null)
 				return false;

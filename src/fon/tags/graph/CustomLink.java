@@ -1,11 +1,11 @@
 package fon.tags.graph;
 
-public class MyLink {
+public class CustomLink {
 	String edgeName;
 	int weight; // should be private for good practice
 	//int id;
 
-	public MyLink(int weight, String edgeName) {
+	public CustomLink(int weight, String edgeName) {
 		//this.id = edgeCount++; // This is defined in the outer class.
 		this.weight = weight;
 		this.edgeName = edgeName;
@@ -33,7 +33,7 @@ public class MyLink {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		MyLink other = (MyLink) obj;
+		CustomLink other = (CustomLink) obj;
 		if (edgeName == null) {
 			if (other.edgeName != null)
 				return false;
