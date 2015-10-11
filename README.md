@@ -11,23 +11,32 @@ It is still work in progress and it is not something that can be useful to publi
 Increasingly, companies, governments and individuals are faced with large amounts of text that are critical for working and living. Decisions need to be made fast, so it is crucial to get important parts of text in order to act accordingly. 
 
 At the same time, a plethora of content recommendation systems are built and massive amount of Internet moguls tend to use 
-them to get advantage of user feedback. 
+them to get advantage of user feedback on various websites. 
 
 This project has been built with the attempt to take a piece of text and convert it to programmer friendy data structure that
 can be manipulated in different ways.
 
-## WORK
-The idea to work on this kind of project was influenced from the __Lahiri, S., Choudhury, S. R., & Caragea, C. (2014). *Keyword and Keyphrase Extraction Using Centrality Measures on Collocation Networks*. CoRR. Retrieved November 22, 2014__, from http://arxiv.org/pdf/1401.6571v1.
+### About the Project
+The idea to work on this kind of project was influenced by the __Lahiri, S., Choudhury, S. R., & Caragea, C. (2014). *Keyword and Keyphrase Extraction Using Centrality Measures on Collocation Networks*. CoRR. Retrieved November 22, 2014__ paper, from http://arxiv.org/pdf/1401.6571v1.
 
+The approach in mentioned paper is based on several fixed steps on the way of retrieving keywords & keyphrases, so similarly is this project.
 
+There are two parts of the project, one concerning extraction of keywords and other concerning extraction of keyphrases.
 
-Keywords extraction is based on the fixed steps:
+To extract keywords from text following steps are required:
 ------
-- provided text needs to be chunked into words, 
-- words are turned into their basic form (lemmatization),
-- elimination of frequent words (or most common english words),
-- lemmas become nodes connected with weighted edges (number of immediate bigrams in text)
-- lemmas in the graph are scored based on the degree centrality measure
+1. Division of provided text into sentences and subsequently sentences into words,
+2. Conversion of words into their basic form ([lemmatisation](https://en.wikipedia.org/wiki/Lemmatisation)),
+3. Elimination of lemmas that would affect negativelly the final outcome, but empirically don't have value:
+..* Top 5% and bottom 5% words ordered by frequency in the given text or
+..* Most common english words (stopwords),
+4. Creation of graph where lemmas represent nodes and numbers of immediate bigrams in text represent graph edges,
+5. Scoring the graph based on one of the given centrality measures,
+6. Returning the scored lemmas in JSON format.
+
+To extract keywords from text following steps are required:
+------
+1. 
 
 Keyphrases extraction is based on:
 ------
