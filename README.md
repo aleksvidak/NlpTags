@@ -45,6 +45,7 @@ There are two parts of the project, one concerning extraction of keywords and ot
 ### Solution
 Based on the steps mentioned above, it was important to find appropriate libraries, one that deals with NLP tasks and other that is good for creating graphs and scoring edges based on the the different centrality measures.
 
+#### Keywords
 To deal with input text, Java Service uses [The Stanford CoreNLP](http://nlp.stanford.edu/software/corenlp.shtml#Usage) library that provides a set of natural language analysis tools which can take raw text input and supply:
 - the base forms of words, 
 - their parts of speech, whether they are names of companies, people, etc., 
@@ -75,12 +76,14 @@ To remove most common english words there are two stopword lists used in this pr
 
 The result of previous transformations is a list of lemmas ready for insertion into graph. To be able to create graph, its' nodes and edges, service uses [JUNG](http://jung.sourceforge.net/) library.
 Iterating through list of lemmas, they are added to the graph as nodes if the node doesn't exist already and every immediate bigram is presented in graph by edge between two lemmas, so every reoccurence of the same bigram increments the weight of the edge by one.
-After graph creation 
-## References
-- http://arxiv.org/abs/1401.6571
-- http://nlp.stanford.edu/software/corenlp.shtml#Usage
-- http://nlp.stanford.edu/software/lex-parser.shtml
-- https://github.com/jconwell/coreNlp
-- http://jung.sourceforge.net/
-- http://programcreek.com/java-api-examples/index.php?example_code_path=weka-weka.core-Stopwords.java
-- http://www.ling.upenn.edu/courses/Fall_2007/ling001/penn_treebank_pos.html
+After graph creation nodes are scored using [DegreeScorer](http://jung.sourceforge.net/doc/api/edu/uci/ics/jung/algorithms/scoring/DegreeScorer.html) class from JUNG library. 
+
+Keywords are returned to user based on the inquiry. It is possible to choose text for extraction, choose between extraction methods and number of keywords service should return (zero for all keywords).
+
+Since there is a possibility to choose file from the filesystem, data is submitted to the server in the form of multipart/form-data. There is no query string in the url.
+
+Example of service call:
+```
+POST /api/v1/tag
+```
+with parameters: file, method and number.
