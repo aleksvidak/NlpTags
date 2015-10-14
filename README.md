@@ -1,86 +1,91 @@
 # NLP Tags
-A keywords & keyphrases extraction Java RESTful Web Service for Java web applications.
+A keywords & keyphrases extraction RESTful Web Service written in Java.
 ## Overview
-Code in this project is a result of research on natural language processing (NLP). Core functionalities are based on Stanford CoreNLP framework (http://nlp.stanford.edu/) and JUNG (http://jung.sourceforge.net/).
+The code in this project is based on the published research results in the field of Natural Language Processing (NLP). Core functionalities are based on Stanford CoreNLP framework (http://nlp.stanford.edu/) and JUNG (http://jung.sourceforge.net/).
 
-Main goal during project development was to create a functional Java Web Service to provide users the possibility to extract keywords and keyphrases from the given text and return result in JSON format.
+The project's main goal was to create a functional RESTful Web Service to provide users with the possibility to extract keywords and keyphrases from the text and return results in JSON format. The extraction of keywords and keyphrases is based on graph-based representation of text and application of Social Network Analysis (SNA) metrics.
 
-It is still work in progress and it is not something that can be useful to public yet.
+It is still work in progress.
 
 ### Why?
-Increasingly, companies, governments and individuals are faced with large amounts of text that are critical for working and living. Decisions need to be made fast, so it is crucial to get important parts of text in order to act accordingly. 
+Increasingly, companies, governments and individuals are faced with large amounts of text that are critical for their everyday working and life practices. Decisions need to be made fast, so it is crucial to get important information from text to act accordingly. 
 
 At the same time, a plethora of content recommendation systems are built and massive amount of Internet moguls tend to use 
-them to get advantage of user feedback on various websites. 
+that same information from text to get advantage of user feedback on various websites. 
 
-This project has been built with the attempt to take a piece of text and convert it to programmer friendy data structure that
-can be manipulated in different ways.
+This project has been built with as an attempt to provide a service that takes a piece of text, extracts the most relevant keywords and key-phrases from it and returns them in a programming friendly data structure that can be manipulated in different ways.
 
 ### About the Project
-The idea to work on this kind of project was influenced by the __Lahiri, S., Choudhury, S. R., & Caragea, C. (2014). *Keyword and Keyphrase Extraction Using Centrality Measures on Collocation Networks*. CoRR. Retrieved November 22, 2014__ paper, that can be downloaded from http://arxiv.org/pdf/1401.6571v1.
+The work done in this project is largely based on the research reported in *Lahiri, S., Choudhury, S. R., & Caragea, C. (2014). Keyword and Keyphrase Extraction Using Centrality Measures on Collocation Networks. CoRR. Retrieved November 22, 2014*, that can be downloaded from http://arxiv.org/pdf/1401.6571v1.
 
-The approach in mentioned paper is based on several fixed steps on the way of retrieving keywords & keyphrases, so similarly is this project.
+The approach in the mentioned paper consists of several steps that lead to the extraction of keywords and key-phrases from any piece of text; these steps are closely followed in this project.
 
-There are two parts of the project, one concerning extraction of keywords and other concerning extraction of keyphrases.
+The project consists of two parts, one concerning the extraction of keywords and other concerning the extraction of key-phrases.
 
-#### To extract keywords from text following steps are required:
-1. Division of provided text into sentences and subsequently sentences into words,
-2. Conversion of words into their basic form ([lemmatisation](https://en.wikipedia.org/wiki/Lemmatisation)),
-3. Elimination of lemmas that would affect negativelly the final outcome, but empirically don't have value as keywords:
-  * Top 5% and bottom 5% words ordered by frequency in the given text or
-  * Most common english words (stopwords),
-4. Creation of graph where lemmas represent nodes and number of immediate bigrams in text represents graph edge between two bigram lemmas,
-5. Scoring the graph based on one of the given centrality measures,
+#### To extract keywords from text, the following steps are required:
+1. Division of the provided text into sentences, and subsequently sentences into words
+2. Conversion of words into their basic form ([lemmatisation](https://en.wikipedia.org/wiki/Lemmatisation))
+3. Elimination of lemmas that have empirically been proven as irrelevant for keywords extraction and thus might negatively affect the final outcome:
+  * 5% of the most frequent and 5% of the least frequent lemmas (i.e., top 5% and bottom 5% of lemmas ordered by their frequency) in the given text or
+ * Most common English words (stop-words)
+4. Creation of graph where lemmas represent nodes, while an edge between two nodes is established if the corresponding lemmas occur one next to the other in the input text (i.e., if they form a bigram); edges are weighted based on the number of immediate bigrams in the input text
+5. Scoring the graph based on one of the given centrality measures (Degree, Strength, Neighborhood size – order 1, Coreness, Clustering Coefficient, Structural Diversity Index, PageRank, HITS, Betweenness, Closeness, Eigenvector Centrality)
 6. Returning the scored lemmas in JSON format.
 
-#### To extract keyphrases from text following steps are required:
-1. Division of provided text into sentences and subsequently sentences into words,
-2. Conversion of words into their basic form (lemmatisation),
-3. Working out the grammatical structure of sentences by annotating lemmas,
-4. Elimination of grammatical structures that don't represent noun phrases,
-5. Creation of graph where noun phrases represent nodes and number of occurences of two noun phrases in certain window in text represents graph edge between two nodes.
-6. Scoring the graph based on one of the given centrality measures,
+#### To extract keyphrases from text, the following steps are required:
+1. Division of the provided text into sentences, and subsequently sentences into words
+2. Conversion of words into their basic form (lemmatisation)
+3. Working out the grammatical structure of sentences by annotating lemmas with Part of Speech (POS) tags
+4. Elimination of grammatical structures that do not represent noun phrases
+5. Creation of a graph where noun phrases represent nodes, while edges are formed between two nodes if the corresponding noun phrases occur in a specified 'window' in the input text; edges are weighted based on the number of common occurrences of the two noun phrases in the text
+6. Scoring the graph based on one of the given centrality measures (Degree, Strength, Neighborhood size – order 1, Coreness, Clustering Coefficient, Structural Diversity Index, PageRank, HITS, Betweenness, Closeness, Eigenvector Centrality)
 7. Returning the scored noun phrases in JSON format.
 
 ### Solution
-Based on the steps mentioned above, it was important to find appropriate libraries, one that deals with NLP tasks and other that is good for creating graphs and scoring edges based on the the different centrality measures.
+Based on the steps mentioned above, it was important to find appropriate software libraries, those that deal with NLP tasks and others that are good for creating graphs and scoring edges based on different SNA centrality measures.
 
 #### Keywords
-To deal with input text, Java Service uses [The Stanford CoreNLP](http://nlp.stanford.edu/software/corenlp.shtml#Usage) library that provides a set of natural language analysis tools which can take raw text input and supply:
+To process the input text, the project uses [the Stanford CoreNLP](http://nlp.stanford.edu/software/corenlp.shtml#Usage) library that provides a set of natural language analysis tools that can take raw input text and supply:
 - the base forms of words, 
-- their parts of speech, whether they are names of companies, people, etc., 
-- normalized dates, times, and numeric quantities, and 
+- parts of speech tags,
+- identification of named entities such as companies, people, etc., 
+- normalized dates, times, and numeric quantities,  
 - marking up the structure of sentences in terms of phrases and word dependencies, 
-- indication which noun phrases refer to the same entities, 
+- co-reference resolution (i.e., indication which noun phrases refer to the same entities), 
 - indication of sentiment, etc. 
 
-Process starts by chunking text to sentences and then a tokenizer divides text into a sequence of tokens, which roughly correspond to "words". 
-Tokenizing text results are "words" which include dots, commas, regular words ... Tokens can be transformed to lemmas (to the words' basic form) and not all lemmas are valuable as tags in the end, so it is important to remove those unwanted lemmas:
-- that are not nouns,
-- that are less than 3 characters long,
-- brackets that are presented in form of "-lrb-,-rrb-,-lsb-,-rsb-".
+The process starts by chunking the input text into sentences, and then a tokenizer divides text into a sequence of tokens, which roughly correspond to "words". 
+Tokenization of text produces basic text units - tokens - which include dots, commas, regular words ... Tokens can be transformed to lemmas (to the words' basic form). However, not all lemmas are valuable as keywords in the end, so it is important to remove lemmas that are:
+- not nouns,
+- less than 3 characters long,
+- brackets presented in form of "-lrb-,-rrb-,-lsb-,-rsb-".
 
-To be able to identify nouns there is MaxentTagger - a Part-Of-Speech Tagger (POS Tagger) which is a piece of software that reads text in some language and assigns parts of speech to each word, such as noun, verb, adjective, etc. There are two taggers in distribution and service uses a model using only left second-order sequence information and similar but less unknown words and lexical features as the other model in *edu/stanford/nlp/models/pos-tagger/english-left3words/english-left3words-distsim.tagger*. This tagger runs a lot faster, and is recommended for general use. Its accuracy was 96.92% on Penn Treebank WSJ secs. 22-24.
+For identifying nouns, CoreNLP provides MaxentTagger - Part-Of-Speech Tagger (POS Tagger). It is a piece of software that reads text in some language and assigns parts of speech to each word, such as noun, verb, adjective, etc. There are two taggers in distribution and service uses a model able to learn probabilities of POS tags for triples going through sequences in one direction (left to right) *english-left3words-distsim.tagger*. This tagger runs a lot faster than the bidirectional ones, and is recommended for general use. Its accuracy was 96.92% on Penn Treebank WSJ secs. 22-24.
 
-It assigns lemmas with one of the tags on the following [list](https://www.ling.upenn.edu/courses/Fall_2003/ling001/penn_treebank_pos.html). Needed noun tags are NN, NNS, NNP and NNPS. All other lemmas are ignored. 
+It associates each lemma with one of the POS tags from the following [list](https://www.ling.upenn.edu/courses/Fall_2003/ling001/penn_treebank_pos.html). For this project, noun phrases tags -  NN, NNS, NNP and NNPS - are important; all other lemmas are ignored. 
 
-This is the point in extraction of keywords where methods for eliminating __top 5% and bottom 5% words ordered by frequency in the given text_ and _most common english words (stopwords)__ separate ways.
+This is the point in the process of extracting keywords where the noun phrases (selected in the previous step) should be filtered, to remove those that have very little likelihood of being keywords. This filtering can be done in two ways: 
+1. by eliminating 5% of the most frequent and 5% of the least frequent words (i.e., top 5% and bottom 5% words ordered by their frequency) in the given text, and
+2. by eliminating common English words using one of the available stop-words list.
 
-##### Top 5% and bottom 5% words ordered by frequency in the given text
-To remove words by their frequency in the given text it is important to make a dictionary where value is number of occurences of the specific word in text. After sorting that data structure it is possible to remove Top 5% and bottom 5% words by frequency.
+##### Removing top 5% and bottom 5% words ordered by their frequency in the given text
+To remove words by their frequency in the given text it is important to make a dictionary of the words appearing in the text, and where each word is associated with the number of its occurrences in the text. After sorting thus obtained data structure, it is possible to remove top 5% and bottom 5% words ordered by their frequency.
 
-##### Most common english words (stopwords)
-To remove most common english words there are two stopword lists used in this project:
-- http://programcreek.com/java-api-examples/index.php?example_code_path=weka-weka.core-Stopwords.java
-- A list found in [StopAnalyzer](https://lucene.apache.org/core/4_0_0/analyzers-common/org/apache/lucene/analysis/core/StopAnalyzer.html) class of Apache Lucene Core text search engine library.
+##### Removing most common English words (stopwords)
+To remove most common English words, two  publicly available stopword lists are used in this project:
+- [Stopwords list from the Weka framework](http://programcreek.com/java-api-examples/index.php?example_code_path=weka-weka.core-Stopwords.java)
+- A list provided in the [StopAnalyzer](https://lucene.apache.org/core/4_0_0/analyzers-common/org/apache/lucene/analysis/core/StopAnalyzer.html) class of the Apache Lucene Core text search engine library.
 
-The result of previous transformations is a list of lemmas ready for insertion into graph. To be able to create graph, its' nodes and edges, service uses [JUNG](http://jung.sourceforge.net/) library.
-Iterating through list of lemmas, lemmas are added to the graph as nodes if the node doesn't exist already and every immediate bigram is presented in graph by edge between two lemmas, so every reoccurence of the same bigram increments the weight of the edge by one.
-After graph creation nodes are scored using [DegreeScorer](http://jung.sourceforge.net/doc/api/edu/uci/ics/jung/algorithms/scoring/DegreeScorer.html) class from JUNG library which is based on degree centrality measure.
+The result of the above described processing steps is a list of lemmas ready for creation of a graph. To create a graph, project uses the [JUNG](http://jung.sourceforge.net/) Java library.
+Iterating through list of lemmas, a lemma is added to the graph as new node if it hasn't been already added. Every bigram is presented in the graph by establishing an edge between the two lemmas that form the bigram, while every reoccurrence of the same bigram increments the weight of the corresponding edge by one.
+After the graph creation, nodes are scored using [DegreeScorer](http://jung.sourceforge.net/doc/api/edu/uci/ics/jung/algorithms/scoring/DegreeScorer.html) class from the JUNG library; this scoring is based on degree centrality measure, which is defined as the number of links incident upon a node (i.e., the number of ties that node has).
 
-Keywords are returned to user based on the inquiry. It is possible to choose text for extraction, choose between extraction methods and number of keywords service should return (zero for all keywords).
+The developed service allows for specifying:
+- the text to be used for keywords extraction,
+- the extraction methods to be applied,
+- the number of keywords to be returned (zero for all keywords).
 
-Since there is a possibility to choose file from the filesystem, data is submitted to the server in the form of multipart/form-data. There is no query string in the url.
+Since there is a possibility to choose a .txt file from the file system, data is submitted to the server in the form of multipart/form-data. There is no query string in the url.
 
 Example of service call:
 ```
