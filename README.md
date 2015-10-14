@@ -65,7 +65,7 @@ For identifying nouns, CoreNLP provides MaxentTagger - Part-Of-Speech Tagger (PO
 It associates each lemma with one of the POS tags from the following [list](https://www.ling.upenn.edu/courses/Fall_2003/ling001/penn_treebank_pos.html). For this project, noun phrases tags -  NN, NNS, NNP and NNPS - are important; all other lemmas are ignored. 
 
 This is the point in the process of extracting keywords where the noun phrases (selected in the previous step) should be filtered, to remove those that have very little likelihood of being keywords. This filtering can be done in two ways: 
-1. by eliminating 5% of the most frequent and 5% of the least frequent words (i.e., top 5% and bottom 5% words ordered by their frequency) in the given text, and
+1. by eliminating 5% of the most frequent and 5% of the least frequent words (i.e., top 5% and bottom 5% words ordered by their frequency) in the given text and
 2. by eliminating common English words using one of the available stop-words list.
 
 ##### Removing top 5% and bottom 5% words ordered by their frequency in the given text
