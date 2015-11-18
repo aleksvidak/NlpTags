@@ -167,10 +167,19 @@ public class KeywordsParser {
 		}
 
 		TreeMap<String, Integer> keywords = new TreeMap<String, Integer>();
-
+		TreeMap<String, Integer> dictionary = new TreeMap<String, Integer>();
+		TreeMap<String, Integer> keywords2 = new TreeMap<String, Integer>();
+		// counting the number of appearances of lemmas, need to make a new variable to put the data
+		dictionary = Transformer.makeDictionary(lemmas);
 		// return keywords
 		keywords = KeywordsGraph.createGraph(lemmas);
 
+		keywords2 = Transformer.mergeKeywords(keywords, dictionary);
+		System.out.println("key "+keywords);
+		System.out.println("dic "+dictionary);
+		System.out.println("res "+keywords2);
+		
+		
 		if (noOfEntries == 0)
 			return Transformer.sortByValue(keywords);
 		else

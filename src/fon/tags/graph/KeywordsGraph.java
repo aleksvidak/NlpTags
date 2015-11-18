@@ -20,7 +20,6 @@ public class KeywordsGraph {
 		String previous = "";
 		// create graph
 		for (String current : lemmas) {
-			int c = 1;
 
 			CustomNode currentNode = new CustomNode(current);
 			CustomNode previousNode = new CustomNode(previous);
@@ -31,9 +30,9 @@ public class KeywordsGraph {
 
 			if (previous != ""
 					&& lemmasGraph.findEdge(previousNode, currentNode) == null) {
-				CustomLink noviLink = new CustomLink(c, previousNode + "-"
+				CustomLink newLink = new CustomLink(1, previousNode + "-"
 						+ currentNode);
-				lemmasGraph.addEdge(noviLink, previousNode, currentNode);
+				lemmasGraph.addEdge(newLink, previousNode, currentNode);
 			}
 
 			else if (previous != ""

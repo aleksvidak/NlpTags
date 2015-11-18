@@ -22,7 +22,24 @@ public class Transformer {
 		}
 		return dictionary;
 	}
+	
+	// merge every scored keyword with the number of its appearances in the text
 
+	public static TreeMap<String, Integer> mergeKeywords(TreeMap<String, Integer> keywords, TreeMap<String, Integer> dictionary) {
+		TreeMap<String, Integer> mergedMap = new TreeMap<String, Integer>();
+		
+		for (Map.Entry<String, Integer> keyword : keywords.entrySet()) {
+			if (dictionary.containsKey(keyword.getKey())) {
+				mergedMap.put(keyword.getKey(), dictionary.get(keyword.getKey()));
+			}
+			else {
+				// do nothing
+			}
+				
+		}
+		
+		return mergedMap;
+	}
 	// sort map by values
 	public static TreeMap<String, Integer> sortByValue(
 			TreeMap<String, Integer> map) {
