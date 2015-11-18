@@ -86,15 +86,12 @@ The developed service allows for specifying:
 - the number of keywords to be returned (zero for all keywords).
 
 It is possible to make the call to the service using query string containing three parameters:
-1. text
-Text of the document you want to extract keywords/key-phrases from;
-2. method 
-Three choices possible: 
+1. text - text of the document you want to extract keywords/key-phrases from;
+2. method - three choices possible: 
 - stopwords (extraction of keywords while pre-eliminating stopwords in the given text), 
 - frequency (extraction of keywords while pre-eliminating top 5% and bottom 5% words ordered by their frequency in the given text) or
 - keyphrases (extraction of key-phrases), depending on which functionality you want to use.
-3. number 
-Number of keywords/key-phrases service will return (0 for all).
+3. number - number of keywords/key-phrases service will return (0 for all).
 
 Example of service call:
 ```
