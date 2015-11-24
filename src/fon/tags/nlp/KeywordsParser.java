@@ -7,6 +7,8 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 import java.util.TreeMap;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.apache.lucene.analysis.StopAnalyzer;
 
@@ -132,9 +134,18 @@ public class KeywordsParser {
 		// run all Annotators on this text
 		this.pipeline.annotate(document);
 		// instantiate nlp tagger to get out noun words only
-
+		final String URL_REGEX = "^((https?|ftp)://|(www|ftp)\\.)?[a-z0-9-]+(\\.[a-z0-9-]+)+([/?].*)?$";
+		final String HTML_REGEX = "</?\\w+((\\s+\\w+(\\s*=\\s*(?:\".*?\"|'.*?'|[^'\">\\s]+))?)+\\s*|\\s*)/?>";
+		final String EMAIL_REGEX = 
+				"^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
+				+ "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
+		
+		Pattern purl = Pattern.compile(URL_REGEX);
+		Pattern phtml = Pattern.compile(HTML_REGEX);
+		Pattern pemail = Pattern.compile(EMAIL_REGEX);
+        
 		CustomStopwords csw = new CustomStopwords();
-
+		
 		String tag = "";
 		String lemma = "";
 		TaggedWord tgw = new TaggedWord();
@@ -147,18 +158,26 @@ public class KeywordsParser {
 			for (CoreLabel token : sentence.get(TokensAnnotation.class)) {
 				// Retrieve and add the lemma for each word into the list of
 				// lemmas
-
+				
 				lemma = token.get(LemmaAnnotation.class).toLowerCase();
+				Matcher matcherUrl = purl.matcher(lemma);
+				Matcher matcherHtml = phtml.matcher(lemma);
+				Matcher matcherEmail = pemail.matcher(lemma);
+				boolean isURL=matcherUrl.matches();
+				boolean isHTML=matcherHtml.matches();
+				boolean isEMAIL=matcherEmail.matches();
 				tag = tagger.tagString(lemma);
 				tgw.setFromString(tag, "_");
+				//check if a lemma matches url regex
+				
 
 				// if tagged word is not noun, or it is less than 3 characters
-				// long or it is in the list of frequent english words do
+				// long or it is in the list of frequent english words or it is a url do
 				// nothing
 				if (!tgw.tag().matches("NN |NNS |NNP |NNPS ")
 						|| lemma.length() < 3
 						|| lemma.matches("-lrb-|-rrb-|-lsb-|-rsb-")
-						|| stopWords.contains(lemma) || csw.is(lemma)) {
+						|| stopWords.contains(lemma) || csw.is(lemma) || isURL || isHTML || isEMAIL) {
 				} else {
 					lemmas.add(lemma);
 				}
