@@ -58,7 +58,7 @@ The process starts by chunking the input text into sentences, and then a tokeniz
 Tokenization of text produces basic text units - tokens - which include dots, commas, regular words ... Tokens can be transformed to lemmas (to the words' basic form). However, not all lemmas are valuable as keywords in the end, so it is important to remove lemmas that are:
 - not nouns,
 - less than 3 characters long,
-- brackets presented in form of "-lrb-,-rrb-,-lsb-,-rsb-".
+- brackets presented in form of "-lrb-,-rrb-,-lsb-,-rsb-,-lcb-,-rcb-".
 
 For identifying nouns, CoreNLP provides MaxentTagger - Part-Of-Speech Tagger (POS Tagger). It is a piece of software that reads text in some language and assigns parts of speech to each word, such as noun, verb, adjective, etc. There are two taggers in distribution and service uses a model able to learn probabilities of POS tags for triples going through sequences in one direction (left to right) *english-left3words-distsim.tagger*. This tagger runs a lot faster than the bidirectional ones, and is recommended for general use. Its accuracy was 96.92% on Penn Treebank WSJ secs. 22-24.
 
@@ -105,7 +105,7 @@ The process starts by chunking the input text into sentences, and then a tokeniz
 Tokenization of text produces basic text units - tokens - which include dots, commas, regular words ... Tokens can be transformed to lemmas (to the words' basic form). However, not all lemmas are valuable as keywords in the end, so it is important to remove lemmas that are:
 - not nouns,
 - less than 3 characters long,
-- brackets presented in form of "-lrb-, -rrb-, -lsb-, -rsb-, -lcb-, -rcb-".
+- brackets presented in form of "-lrb-,-rrb-,-lsb-,-rsb-,-lcb-,-rcb-".
 
 Next step in extracting key-phrases is putting all tokens that pass conditions above to a list. The list is parsed by [LexParser](http://nlp.stanford.edu/nlp/javadoc/javanlp/edu/stanford/nlp/parser/lexparser/LexicalizedParser.html), a class that provides the top-level API and command-line interface to a set of reasonably good treebank-trained parsers. A natural language parser is a program that works out the grammatical structure of sentences, for instance, which groups of words go together (as "phrases") and which words are the subject or object of a verb. After parsed, an example sentence "This is one good example of a sentence." looks like: 
 ```
