@@ -99,9 +99,31 @@ GET /api/v1/tag?text=This is a test.&method=stopwords&number=10
 ```
 with parameters: text, method and number.
 
-#### Keyphrases
+#### Key-phrases
+As in the keywords extraction part of the project, in order to process the input text for key-phrases extraction, the project uses [the Stanford CoreNLP](http://nlp.stanford.edu/software/corenlp.shtml#Usage) library.
 
+The process starts by chunking the input text into sentences, and then a tokenizer divides text into a sequence of tokens. 
+Tokenization of text produces basic text units - tokens - which include dots, commas, regular words ... Tokens can be transformed to lemmas (to the words' basic form). However, not all lemmas are valuable as keywords in the end, so it is important to remove lemmas that are:
+- not nouns,
+- less than 3 characters long,
+- brackets presented in form of "-lrb-,-rrb-,-lsb-,-rsb-".
+
+Next step in extracting key-phrases is putting all tokens that pass conditions above to a list. The list is parsed by LexParser, a class that provides the top-level API and command-line interface to a set of reasonably good treebank-trained parsers. A natural language parser is a program that works out the grammatical structure of sentences, for instance, which groups of words go together (as "phrases") and which words are the subject or object of a verb. After parsed, an example sentence "This is one good example of a sentence." looks like: 
+```
+(ROOT
+   (S
+     (NP (DT This))
+     (VP (VBZ is)
+       (NP
+         (NP (CD one) (JJ good) (NN example))
+         (PP (IN of)
+           (NP (DT a) (NN sentence)))))
+     (. .)))
+```
+This is the point where the parsed sentence is processed and all the nodes that don't have the NP (Noun Phrase) tag are filtered out.
+A collocation network in form of a graph is constructed for each document as follows: nodes represent unique noun phrases, and edges link together noun phrases that occur within a specific window of each other. Window size is the median sentence length of a document. Note that the edges were all weighted with the co-occurrence frequency of np1 and np2. While merging edges, edge weights were incremented.
+After the graph creation, nodes are scored using [DegreeScorer](http://jung.sourceforge.net/doc/api/edu/uci/ics/jung/algorithms/scoring/DegreeScorer.html) class from the JUNG library; this scoring is based on degree centrality measure.
 ### Acknowledgements
-This project has been developed as a part of the assignment for the subject *Applications of Artificial Intelligence* at the Faculty of Organization Sciences, University of Belgrade, Serbia.
+This project has been developed as a part of the assignment for the subject *Applications of Artificial Intelligence* at the Faculty of Organizational Sciences, University of Belgrade, Serbia.
 ### License
 See the [LICENSE](LICENSE.md) file for license rights and limitations (Apache License).
