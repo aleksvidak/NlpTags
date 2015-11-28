@@ -105,7 +105,7 @@ The process starts by chunking the input text into sentences, and then a tokeniz
 Tokenization of text produces basic text units - tokens - which include dots, commas, regular words ... Tokens can be transformed to lemmas (to the words' basic form). However, not all lemmas are valuable as keywords in the end, so it is important to remove lemmas that are:
 - not nouns,
 - less than 3 characters long,
-- brackets presented in form of "-lrb-,-rrb-,-lsb-,-rsb-".
+- brackets presented in form of "-lrb-, -rrb-, -lsb-, -rsb-, -lcb-, -rcb-".
 
 Next step in extracting key-phrases is putting all tokens that pass conditions above to a list. The list is parsed by [LexParser](http://nlp.stanford.edu/nlp/javadoc/javanlp/edu/stanford/nlp/parser/lexparser/LexicalizedParser.html), a class that provides the top-level API and command-line interface to a set of reasonably good treebank-trained parsers. A natural language parser is a program that works out the grammatical structure of sentences, for instance, which groups of words go together (as "phrases") and which words are the subject or object of a verb. After parsed, an example sentence "This is one good example of a sentence." looks like: 
 ```
