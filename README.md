@@ -1,9 +1,9 @@
 # NLP Tags
-A keywords & keyphrases extraction RESTful Web Service written in Java.
+A keywords & key-phrases extraction RESTful Web Service written in Java.
 ## Overview
 The code in this project is based on the published research results in the field of Natural Language Processing (NLP). Core functionalities are based on Stanford CoreNLP framework (http://nlp.stanford.edu/) and JUNG (http://jung.sourceforge.net/).
 
-The project's main goal was to create a functional RESTful Web Service to provide users with the possibility to extract keywords and keyphrases from the text and return results in JSON format. The extraction of keywords and keyphrases is based on graph-based representation of text and application of Social Network Analysis (SNA) metrics.
+The project's main goal was to create a functional RESTful Web Service to provide users with the possibility to extract keywords and key-phrases from the text and return results in JSON format. The extraction of keywords and key-phrases is based on graph-based representation of text and application of Social Network Analysis (SNA) metrics.
 
 It is still work in progress.
 
@@ -32,7 +32,7 @@ The project consists of two parts, one concerning the extraction of keywords and
 5. Scoring the graph based on one of the given centrality measures (Degree, Strength, Neighborhood size – order 1, Coreness, Clustering Coefficient, Structural Diversity Index, PageRank, HITS, Betweenness, Closeness, Eigenvector Centrality)
 6. Returning the scored lemmas in JSON format.
 
-#### To extract keyphrases from text, the following steps are required:
+#### To extract key-phrases from text, the following steps are required:
 1. Division of the provided text into sentences, and subsequently sentences into words
 2. Conversion of words into their basic form (lemmatisation)
 3. Working out the grammatical structure of sentences by annotating lemmas with Part of Speech (POS) tags
