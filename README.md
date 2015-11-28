@@ -80,22 +80,21 @@ The result of the above described processing steps is a list of lemmas ready for
 Iterating through list of lemmas, a lemma is added to the graph as new node if it hasn't been already added. Every bigram is presented in the graph by establishing an edge between the two lemmas that form the bigram, while every reoccurrence of the same bigram increments the weight of the corresponding edge by one.
 After the graph creation, nodes are scored using [DegreeScorer](http://jung.sourceforge.net/doc/api/edu/uci/ics/jung/algorithms/scoring/DegreeScorer.html) class from the JUNG library; this scoring is based on degree centrality measure, which is defined as the number of links incident upon a node (i.e., the number of ties that node has).
 
-The developed service allows for specifying:
+The developed service regarding keywords allows for specifying:
 - the text to be used for keywords extraction,
 - the extraction methods to be applied,
 - the number of keywords to be returned (zero for all keywords).
 
 It is possible to make the call to the service using query string containing three parameters:
-- text - text of the document you want to extract keywords/key-phrases from;
-- method - three choices possible: 
- 1. stopwords (extraction of keywords while pre-eliminating stopwords in the given text), 
- 2. frequency (extraction of keywords while pre-eliminating top 5% and bottom 5% words ordered by their frequency in the given  text) or
- 3. keyphrases (extraction of key-phrases), depending on which functionality you want to use.
+- text - text of the document you want to extract keywords from;
+- method - two choices possible: 
+ 1. stopwords (extraction of keywords while pre-eliminating stopwords in the given text) or
+ 2. frequency (extraction of keywords while pre-eliminating top 5% and bottom 5% words ordered by their frequency in the given  text).
 - number - number of keywords/key-phrases service will return (0 for all).
 
 Example of service call:
 ```
-GET /api/v1/tag?text=This is a test.&method=stopwords&number=10
+GET /api/v1/tag?text=This is a keywords test.&method=stopwords&number=10
 ```
 with parameters: text, method and number.
 
@@ -123,6 +122,23 @@ Next step in extracting key-phrases is putting all tokens that pass conditions a
 This is the point where the parsed sentence is processed and all the nodes that don't have the NP (Noun Phrase) tag are filtered out.
 A collocation network in form of a graph is constructed for each document as follows: nodes represent unique noun phrases, and edges link together noun phrases that occur within a specific window of each other. Window size is the median sentence length of a document. Note that the edges were all weighted with the co-occurrence frequency of np1 and np2. While merging edges, edge weights were incremented.
 After the graph creation, nodes are scored using [DegreeScorer](http://jung.sourceforge.net/doc/api/edu/uci/ics/jung/algorithms/scoring/DegreeScorer.html) class from the JUNG library; this scoring is based on degree centrality measure.
+
+The developed service regarding key-phrases allows for specifying:
+- the text to be used for key-phrases extraction,
+- the extraction method to be applied,
+- the number of key-phrases to be returned (zero for all key-phrases).
+
+It is possible to make the call to the service using query string containing three parameters:
+- text - text of the document you want to extract keywords from;
+- method - 'keyphrases' (extraction of key-phrases);
+- number - number of key-phrases service will return (0 for all).
+
+Example of service call:
+```
+GET /api/v1/tag?text=This is a keyphrases test.&method=keyphrases&number=10
+```
+with parameters: text, method and number.
+
 ### Acknowledgements
 This project has been developed as a part of the assignment for the subject *Applications of Artificial Intelligence* at the Faculty of Organizational Sciences, University of Belgrade, Serbia.
 ### License
