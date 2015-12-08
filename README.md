@@ -103,7 +103,6 @@ As in the keywords extraction part of the project, in order to process the input
 
 The process starts by chunking the input text into sentences, and then a tokenizer divides text into a sequence of tokens. 
 Tokenization of text produces basic text units - tokens - which include dots, commas, regular words ... Tokens can be transformed to lemmas (to the words' basic form). However, not all lemmas are valuable as keywords in the end, so it is important to remove lemmas that are:
-- not nouns,
 - less than 3 characters long,
 - brackets presented in form of "-lrb-,-rrb-,-lsb-,-rsb-,-lcb-,-rcb-".
 
