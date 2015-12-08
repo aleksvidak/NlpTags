@@ -119,7 +119,7 @@ Next step in extracting key-phrases is putting all tokens that pass conditions a
      (. .)))
 ```
 This is the point where the parsed sentence is processed and all the nodes that don't have the NP (Noun Phrase) tag are filtered out.
-A collocation network in form of a graph is constructed for each document as follows: nodes represent unique noun phrases, and edges link together noun phrases that occur within a specific window of each other. Window size is the median sentence length of a document. Note that the edges were all weighted with the co-occurrence frequency of np1 and np2. While merging edges, edge weights were incremented.
+A collocation network in form of a graph is constructed for each document as follows: nodes represent unique noun phrases, and edges link together noun phrases that occur within a specific window of each other. Window size is the median sentence length of a document. Note that every edge between noun phrase 1 and noun phrase 2 is weighted with their co-occurrence frequency. While merging edges, edge weights were incremented.
 After the graph creation, nodes are scored using [DegreeScorer](http://jung.sourceforge.net/doc/api/edu/uci/ics/jung/algorithms/scoring/DegreeScorer.html) class from the JUNG library; this scoring is based on degree centrality measure.
 
 The developed service regarding key-phrases allows for specifying:
