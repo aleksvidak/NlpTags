@@ -82,21 +82,23 @@ After the graph creation, nodes are scored using [DegreeScorer](http://jung.sour
 
 The developed service regarding keywords allows for specifying:
 - the text to be used for keywords extraction,
-- the extraction methods to be applied,
+- the extraction method to be applied,
+- the filter used in removing frequent words (stopwords),
 - the number of keywords to be returned (zero for all keywords).
 
 It is possible to make the call to the service using query string containing three parameters:
 - text - text of the document you want to extract keywords from;
-- method - two choices possible: 
+- method - 'keywords' (extraction of keywords);
+- filter - two choices possible: 
  1. stopwords (extraction of keywords while pre-eliminating stopwords in the given text) or
  2. frequency (extraction of keywords while pre-eliminating top 5% and bottom 5% words ordered by their frequency in the given  text).
 - number - number of keywords/key-phrases service will return (0 for all).
 
 Example of service call:
 ```
-GET /api/v1/tag?text=This is a keywords test.&method=stopwords&number=10
+GET /api/v1/tag?text=This is a keywords test.&method=keywords&filter=stopwords&number=10
 ```
-with parameters: text, method and number.
+with parameters: text, method, filter and number.
 
 #### Key-phrases
 As in the keywords extraction part of the project, in order to process the input text for key-phrases extraction, the project uses [the Stanford CoreNLP](http://nlp.stanford.edu/software/corenlp.shtml#Usage) library.
