@@ -92,7 +92,7 @@ It is possible to make the call to the service using query string containing thr
 - filter - two choices possible: 
  1. stopwords (extraction of keywords while pre-eliminating stopwords in the given text) or
  2. frequency (extraction of keywords while pre-eliminating top 5% and bottom 5% words ordered by their frequency in the given  text).
-- number - number of keywords/key-phrases service will return (0 for all).
+- number - number of keywords service will return (0 for all).
 
 Example of service call:
 ```
