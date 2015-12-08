@@ -76,7 +76,8 @@ public class KeywordsParser {
 
 				if (!tgw.tag().matches("NN |NNS |NNP |NNPS ")
 						|| lemma.length() < 3
-						|| lemma.matches("-lrb-|-rrb-|-lsb-|-rsb-")) {
+						|| lemma.contains("_")
+						|| lemma.matches("-lrb-|-rrb-|-lsb-|-rsb-|-rcb-|-lcb-")) {
 					// do nothing
 				} else
 					lemmas.add(lemma);
@@ -143,6 +144,7 @@ public class KeywordsParser {
 		Pattern purl = Pattern.compile(URL_REGEX);
 		Pattern phtml = Pattern.compile(HTML_REGEX);
 		Pattern pemail = Pattern.compile(EMAIL_REGEX);
+		Pattern any = Pattern.compile("[^a-zA-Z\\s\\-]");
         
 		CustomStopwords csw = new CustomStopwords();
 		
@@ -163,9 +165,13 @@ public class KeywordsParser {
 				Matcher matcherUrl = purl.matcher(lemma);
 				Matcher matcherHtml = phtml.matcher(lemma);
 				Matcher matcherEmail = pemail.matcher(lemma);
+				Matcher matcherAny = any.matcher(lemma);
+			
 				boolean isURL=matcherUrl.matches();
 				boolean isHTML=matcherHtml.matches();
 				boolean isEMAIL=matcherEmail.matches();
+				boolean isSpecial = matcherAny.find();
+				
 				tag = tagger.tagString(lemma);
 				tgw.setFromString(tag, "_");
 				//check if a lemma matches url regex
@@ -176,8 +182,8 @@ public class KeywordsParser {
 				// nothing
 				if (!tgw.tag().matches("NN |NNS |NNP |NNPS ")
 						|| lemma.length() < 3
-						|| lemma.matches("-lrb-|-rrb-|-lsb-|-rsb-")
-						|| stopWords.contains(lemma) || csw.is(lemma) || isURL || isHTML || isEMAIL) {
+						|| lemma.matches("-lrb-|-rrb-|-lsb-|-rsb-|-rcb-|-lcb-")
+						|| stopWords.contains(lemma) || csw.is(lemma) || isURL || isHTML || isEMAIL || isSpecial) {
 				} else {
 					lemmas.add(lemma);
 				}

@@ -88,7 +88,7 @@ public class KeyphrasesParser {
 				String word = token.word().toLowerCase();
 				// remove brackets because they are displayed in a form that is
 				// longer than 2 characters
-				if (word.matches("-lrb-|-rrb-|-lsb-|-rsb-")
+				if (word.matches("-lrb-|-rrb-|-lsb-|-rsb-|-rcb-|-lcb-")
 						|| word.length() < 3) {
 					// do nothing
 				} else {
@@ -96,7 +96,7 @@ public class KeyphrasesParser {
 				}
 
 				if (tokenString.length() > 2
-						&& !tokenString.matches("-lrb-|-rrb-|-lsb-|-rsb-")) {
+						&& !tokenString.matches("-lrb-|-rrb-|-lsb-|-rsb-|-rcb-|-lcb-")) {
 					tokensList.add(token);
 				}
 
